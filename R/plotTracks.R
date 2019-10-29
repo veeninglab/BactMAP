@@ -29,15 +29,23 @@ plotTracks <- function(meshdata,
 
       if(turn_cells==TRUE){
         if("X_rot"%in%colnames(meshdata)){
-          if("Xrotum"%in%colnames(meshdata)!=T){
-            if(missing(mag)){stop("Please specify the pixel-micron conversion value 'mag'.")}
-            meshdata$Xrotum <- meshdata$X_rot*unlist(get(magnificationList,envir=magEnv)[mag])
-            meshdata$Yrotum <- meshdata$Y_rot*unlist(get(magnificationList,envir=magEnv)[mag])
+          if("Xrotum"%in%colnames(meshdata)){
+            meshdata$Xrot_micron <- meshdata$Xrotum
+            meshdata$Yrot_micron <- meshdata$Yrotum
+            meshdata$Xrotum <- NULL
+            meshdata$Yrotum <- NULL
+          }
+          if("Xrot_micron"%in%colnames(meshdata)!=T){
+            if(missing(mag)){
+              stop("Please specify the pixel-micron conversion value 'mag'.")
+            }
+            meshdata$Xrot_micron <- meshdata$X_rot*unlist(get(magnificationList,envir=magEnv)[mag])
+            meshdata$Yrot_micron <- meshdata$Y_rot*unlist(get(magnificationList,envir=magEnv)[mag])
           }
         }
         outplot <- outplot +
           ggplot2::geom_polygon(data=meshdata,
-                                ggplot2::aes_string(x='Xrotum', y='Yrotum', color='frame', group='frame'),
+                                ggplot2::aes_string(x='Xrot_micron', y='Yrot_micron', color='frame', group='frame'),
                                 fill="black", alpha=transparency/5)
       }
       if(turn_cells==FALSE){

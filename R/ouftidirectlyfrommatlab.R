@@ -150,8 +150,8 @@ extr_Oufti <- function(matfile, mag="No_PixelCorrection", phylo=FALSE){
   outlist$pixel2um <- unlist(get(magnificationList, envir=magEnv)[mag])
   Mesh$max_um <- Mesh$max.length*outlist$pixel2um
   Mesh$maxwum <- Mesh$max.width*outlist$pixel2um
-  Mesh$Xrotum <- Mesh$X_rot*outlist$pixel2um
-  Mesh$Yrotum <- Mesh$Y_rot*outlist$pixel2um
+  Mesh$Xrot_micron <- Mesh$X_rot*outlist$pixel2um
+  Mesh$Yrot_micron <- Mesh$Y_rot*outlist$pixel2um
   if("signal1"%in%colnames(outlist$cellList)){
     if(length(unique(outlist$signal1))>1){
       Mesh <- merge(Mesh, outlist$cellList[,c("cell", "frame", "mean.signal", "sd.signal")])

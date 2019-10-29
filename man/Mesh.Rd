@@ -32,8 +32,8 @@ When extracting segmentation data, the main output is a dataframe called 'mesh'.
 
   When a magnification conversion factor is indicated, the coordinates and lengths are calculated in micron. The following 4 variables are added:
   \describe{
-    \item{\code{Xrotum}}{the X-coordinate of the turned cell in micron}
-    \item{\code{Yrotum}}{the Y-coordinate of the turned cell in micron}
+    \item{\code{Xrot_micron}}{the X-coordinate of the turned cell in micron}
+    \item{\code{Yrot_micron}}{the Y-coordinate of the turned cell in micron}
     \item{\code{max_um}}{the cell length in micron}
     \item{\code{maxwum}}{the cell width in micron}
     }

@@ -38,7 +38,7 @@ plotObjects <- function(obdat, meshdat, groups=1, cellcolor="black", objectcolor
     meshdat$cellframe <- paste(meshdat$cell, meshdat$frame, sep="_")
     obdat <- obdat[order(obdat$frame, obdat$cell, obdat$obnum, obdat$obpath),]
     outplot <- ggplot2::ggplot(meshdat) +
-      ggplot2::geom_polygon(ggplot2::aes_string(x='Xrotum', y='Yrotum', group='cellframe'), alpha=transparency, fill=cellcolor, color=NA) +
+      ggplot2::geom_polygon(ggplot2::aes_string(x='Xrot_micron', y='Yrot_micron', group='cellframe'), alpha=transparency, fill=cellcolor, color=NA) +
       ggplot2::geom_polygon(data=obdat, ggplot2::aes_string(x='ob_out_x', y='ob_out_y', group='frameOB'), alpha=transparency, fill=objectcolor, color=NA) +
       ggplot2::facet_grid(q1~.) +
       ggplot2::coord_fixed() +

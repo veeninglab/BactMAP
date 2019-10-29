@@ -3,17 +3,19 @@ Title: Visualization and Analysis of Bacterial Cell Segmentation and Fluorescenc
 Version: 0.1.0.0
 Authors@R: person("Renske", "van Raaphorst", email = "renske.vanraaphorst@unil.ch", role = c("aut", "cre"))
 Description: Automated import of bacterial cell segmentation and fluorescence data from a range of softwares to uniformally analyze and visualize.
-Depends: R (>= 3.3)
+Depends: R (>= 3.4)
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 URL: https://veeninglab.com/bactmap
+biocViews:
 Imports:
-  ggplot2,
+  ggplot2 (>= 3.0.0),
   plyr,
   utils,
   methods,
   stats,
+  rlang (>= 0.4.0),
   ggtree
 Suggests:
   gridExtra,
@@ -36,7 +38,7 @@ Suggests:
   knitr,
   rmarkdown,
   pbapply,
-  gganimate,
+  gganimate (>= 1.0.3),
   ggimage,
   mvtnorm,
   tidyverse

@@ -136,10 +136,20 @@ plotOverlay <- function(meshdata,
 
   #check mesh for requirements (if they're there)
   if(missing(meshdata)!=T){
-    if("Xrotum"%in%colnames(meshdata)!=T){
-      if(missing(mag)){stop("No pixel-micron-corrected X/Y ggplot2::coordinates in mesh file 'Xrotum' and 'Yrotum' found and no magnification correction value ('mag') found. Add value 'mag' in function or add columns 'Xrotum' & 'Yrotum' to meshdata")}
-      meshdata$Xrotum <- meshdata$X_rot * unlist(get(magnificationList,envir=magEnv)[mag])
-      meshdata$Yrotum <- meshdata$Y_rot * unlist(get(magnificationList,envir=magEnv)[mag])
+    if("Xrotum"%in%colnames(meshdata)){
+      meshdata$Xrot_micron <- meshdata$Xrotum
+      meshdata$Yrot_micron <- meshdata$Yrotum
+      meshdata$Xrotum <- NULL
+      meshdata$Yrotum <- NULL
+    }
+    if("Xrot_micron"%in%colnames(meshdata)!=T){
+      if(missing(mag)){
+        if("Xrotum"%in%colnames(meshdata)!=T){
+          stop("No pixel-micron-corrected X/Y ggplot2::coordinates in mesh file 'Xrot_micron' and 'Yrot_micron' found and no magnification correction value ('mag') found. Add value 'mag' in function or add columns 'Xrot_micron' & 'Yrot_micron' to meshdata")}
+
+      }
+      meshdata$Xrot_micron <- meshdata$X_rot * unlist(get(magnificationList,envir=magEnv)[mag])
+      meshdata$Yrot_micron <- meshdata$Y_rot * unlist(get(magnificationList,envir=magEnv)[mag])
     }
   }
 
@@ -204,7 +214,7 @@ plotOverlay <- function(meshdata,
     if(missing(meshdata)!=T){
       meshdata <- merge(meshdata, onlycells)
       meshdata$cellframe <- paste(meshdata$cell, meshdata$frame, sep="_")
-      plot <- plot + ggplot2::geom_polygon(data=meshdata, ggplot2::aes_string(x='Xrotum', y='Yrotum', group='cellframe'),
+      plot <- plot + ggplot2::geom_polygon(data=meshdata, ggplot2::aes_string(x='Xrot_micron', y='Yrot_micron', group='cellframe'),
                                            fill=meshcolor, alpha=transparency, color=NA)
     }
     if(missing(objectdata)!=T){

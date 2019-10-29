@@ -131,8 +131,15 @@ bindallcellsandmeshes <- function(cellflip, cellmask, timelapse=TRUE){
 
 #' @export
 extr_SuperSeggerCells <- function(loc, frames, mag, timelapse=FALSE, startframe=0){
+  if(paste(loc, "/xy", startframe, sep="")%in%list.dirs(loc)==FALSE){
+    stop(paste("Cannot find SuperSegger output folder(s) starting with 'xy' in the directory '", loc, "'. Please make sure to set the correct path in variable 'loc'", sep=""))
+  }
   if (!requireNamespace("R.matlab", quietly = TRUE)) {
     inp <- readline("Package 'R.matlab' and 'raster' needed for this function to work. Press 'y' to install, or any other key to cancel.")
+    if(!requireNamespace("rgeos", quietly=TRUE)){
+      message("Installing 'raster' dependency 'rgeos'..")
+      utils::install.packages("rgeos")
+    }
     if(inp=="y"|inp=="Y"){utils::install.packages(c("R.matlab", "raster"))}else{stop("Canceled")}
   }
   if (!requireNamespace("raster", quietly = TRUE)) {
@@ -150,8 +157,8 @@ extr_SuperSeggerCells <- function(loc, frames, mag, timelapse=FALSE, startframe=
     if(is.numeric(unlist(get(magnificationList,envir=magEnv)[mag]))==FALSE){
       stop("Magnification conversion factor not recognized. Please use addPixels2um('pixelName', pixelsize) to add your conversion factor")
     }
-    finalframe$mesh$Yrotum <- finalframe$mesh$Y_rot * unlist(get(magnificationList,envir=magEnv)[mag])
-    finalframe$mesh$Xrotum <- finalframe$mesh$X_rot * unlist(get(magnificationList,envir=magEnv)[mag])
+    finalframe$mesh$Yrot_micron <- finalframe$mesh$Y_rot * unlist(get(magnificationList,envir=magEnv)[mag])
+    finalframe$mesh$Xrot_micron <- finalframe$mesh$X_rot * unlist(get(magnificationList,envir=magEnv)[mag])
     finalframe$mesh$max_um <- finalframe$mesh$max.length* unlist(get(magnificationList, envir=magEnv)[mag])
     finalframe$mesh$maxwum <- finalframe$mesh$max.width *  unlist(get(magnificationList, envir=magEnv)[mag])
     finalframe$mesh$area_um <- finalframe$mesh$area *  unlist(get(magnificationList, envir=magEnv)[mag])^2

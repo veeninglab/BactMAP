@@ -23,7 +23,7 @@ extr_Oufti(matfile, mag="No_PixelCorrection", phylo=FALSE)
 \value{
 A list containing:
 \item{$cellList}{The complete cellList as it is displayed in oufti's output.}
-\item{$mesh}{A dataframe containing the following columns: \code{X, Y, cell, frame, num, max.width, length, steplength, max.length, area, Xmid, Ymid, X_rot, Y_rot, angle, Xrotum, Yrotum, max_um, maxwum}. See standard mesh output for more information.}
+\item{$mesh}{A dataframe containing the following columns: \code{X, Y, cell, frame, num, max.width, length, steplength, max.length, area, Xmid, Ymid, X_rot, Y_rot, angle, Xrot_micron, Yrot_micron, max_um, maxwum}. See standard mesh output for more information.}
 
 When spot data is included:
 \item{$spotframe}{A dataframe containing the following columns: \code{l, d, x, y, position, adj_Rsquared, CI_xy, frame, cell}. See \url{www.oufti.org} for more information on the spot data output.}

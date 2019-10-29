@@ -129,8 +129,8 @@ extr_MicrobeJ <- function(dataloc, spotloc, objectloc, mag, sepspot=",", sepmesh
     if("X_rot"%in%colnames(outlist$mesh)!=T){
       outlist$mesh <- meshTurn(outlist$mesh)
     }
-    outlist$mesh$Xrotum <- outlist$mesh$X_rot * unlist(get(magnificationList, envir=magEnv)[mag])
-    outlist$mesh$Yrotum <- outlist$mesh$Y_rot * unlist(get(magnificationList, envir=magEnv)[mag])
+    outlist$mesh$Xrot_micron <- outlist$mesh$X_rot * unlist(get(magnificationList, envir=magEnv)[mag])
+    outlist$mesh$Yrot_micron <- outlist$mesh$Y_rot * unlist(get(magnificationList, envir=magEnv)[mag])
     outlist$mesh$max_um <- outlist$mesh$max.length * unlist(get(magnificationList, envir=magEnv)[mag])
     outlist$mesh$maxwum <- outlist$mesh$max.width * unlist(get(magnificationList, envir=magEnv)[mag])
   }
@@ -271,8 +271,8 @@ extr_ObjectJ <- function(dataloc,
 
   if(turn_meshes ==TRUE){
     oj2 <- meshTurn(oj2)
-    oj2$Xrotum <- oj2$X_rot * p2um
-    oj2$Yrotum <- oj2$Y_rot * p2um
+    oj2$Xrot_micron <- oj2$X_rot * p2um
+    oj2$Yrot_micron <- oj2$Y_rot * p2um
   }
 
 
@@ -352,8 +352,8 @@ extr_Meshes <- function(dataloc, sep=",", turn=TRUE, mag){
   }
   if(!missing(mag)){
   if(turn==TRUE){
-    meshL$mesh$Xrotum <- meshL$mesh$X_rot * unlist(get(magnificationList, envir=magEnv)[mag])
-    meshL$mesh$Yrotum <- meshL$mesh$Y_rot * unlist(get(magnificationList, envir=magEnv)[mag])
+    meshL$mesh$Xrot_micron <- meshL$mesh$X_rot * unlist(get(magnificationList, envir=magEnv)[mag])
+    meshL$mesh$Yrot_micron <- meshL$mesh$Y_rot * unlist(get(magnificationList, envir=magEnv)[mag])
   }
     meshL$mesh$max_um <- meshL$mesh$max.length * unlist(get(magnificationList, envir=magEnv)[mag])
     meshL$mesh$maxwum <- meshL$mesh$max.width * unlist(get(magnificationList, envir=magEnv)[mag])

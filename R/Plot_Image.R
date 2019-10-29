@@ -245,17 +245,24 @@ plotRaw <- function(tiffdata,
                     viridisoption="inferno",
                     meshcolor="white",
                     spotcolor="yellow",
-                    valuerange){
+                    valuerange,
+                    legend=FALSE){
 
   if(missing(valuerange)!=T&missing(tiffdata)!=T){
     tiffdata[[frameN]] <- tiffdata[[frameN]][tiffdata[[frameN]]$value>valuerange[1]&tiffdata[[frameN]]$value<valuerange[2],]
+  }
+  if(legend==TRUE){
+    lpos="right"
+  }
+  if(legend==FALSE){
+    lpos="none"
   }
   if(missing(tiffdata)!=T){
   plotcells <- ggplot2::ggplot(tiffdata[[frameN]]) + #plot raw image
     ggplot2::geom_raster(ggplot2::aes_string(x='x',y='y',fill='values')) + #use geom_raster to remake image out of dataframe
     ggplot2::theme_classic() + #simple theme, no backgrounds
     ggplot2::scale_fill_viridis_c(option=viridisoption) + #well-working color scheme for gradient values
-    ggplot2::theme(legend.position="none") # remove legend for easy viewing
+    ggplot2::theme(legend.position=lpos) # remove legend for easy viewing
   }
   if(missing(tiffdata)==T){
     plotcells <- ggplot2::ggplot() + ggplot2::theme_dark()

@@ -83,15 +83,16 @@ extr_Morphometrics <- function(morphpath, mag, turncells = TRUE){
       stop("Magnification conversion factor not recognized. Please use addPixels2um('pixelName', pixelsize) to add your conversion factor")
     }
     if(turncells==TRUE){
-      listM$mesh$Xrotum <- listM$mesh$X_rot * unlist(get(magnificationList, envir=magEnv)[mag])
-      listM$mesh$Yrotum <- listM$mesh$Y_rot * unlist(get(magnificationList, envir=magEnv)[mag])
+      listM$mesh$Xrot_micron <- listM$mesh$X_rot * unlist(get(magnificationList, envir=magEnv)[mag])
+      listM$mesh$Yrot_micron <- listM$mesh$Y_rot * unlist(get(magnificationList, envir=magEnv)[mag])
       listM$mesh$maxwum <- listM$mesh$max.width * unlist(get(magnificationList, envir=magEnv)[mag])
     }
     listM$mesh$max_um <- listM$mesh$max.length * unlist(get(magnificationList, envir=magEnv)[mag])
     listM$mesh$area_um <- listM$mesh$area *  unlist(get(magnificationList, envir=magEnv)[mag])^2
     listM$pixel2um <- unlist(get(magnificationList, envir=magEnv)[mag])
   }
-
+  listM$mesh$num <- listM$mesh$numpoint
+  listM$mesh$numpoint <- NULL
   return(listM)
 }
 
