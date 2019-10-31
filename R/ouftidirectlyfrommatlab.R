@@ -114,14 +114,14 @@ extr_OuftiSpots <- function(cellList){
 }
 
 #' @export
-extr_Oufti <- function(matfile, mag="No_PixelCorrection", phylo=FALSE){
+extr_Oufti <- function(matfile, mag="No_PixelCorrection", phylo=FALSE, cellList=FALSE){
   CSV <- FALSE
   ##if CSV input; take cellList, matlab file & object file from there
   if(substr(matfile, nchar(matfile)-3, nchar(matfile))==".csv"|substr(matfile, nchar(matfile)-3, nchar(matfile))==".txt"){
     CSV <- TRUE
     outlist <- extr_OuftiCSV(matfile)
     Mesh <- outlist$mesh
-    cellList <- outlist$cellList
+    cellList1 <- outlist$cellList
     if("objectframe"%in%names(outlist)){
       OBJ <- outlist$objectframe
     }
@@ -130,11 +130,11 @@ extr_Oufti <- function(matfile, mag="No_PixelCorrection", phylo=FALSE){
   else{
     outlist <- list()
     message("Extracting original data from the matlab file... This step may take a while.")
-    cellList <- extr_OuftiCellList(matfile)
+    cellList1 <- extr_OuftiCellList(matfile)
     message("Finished extracting.")
-    outlist$cellList <- cellList
+    outlist$cellList <- cellList1
     message("Taking the x/y coordinates of the mesh outlines of each cell... This step may also take a while.")
-    Mesh <- extr_OuftiMat(cellList)
+    Mesh <- extr_OuftiMat(cellList1)
     message("Converting mesh file into standard BactMAP format...")
   }
   ##turn meshes to one x/y column
@@ -167,10 +167,10 @@ extr_Oufti <- function(matfile, mag="No_PixelCorrection", phylo=FALSE){
   }
   ##then take the spots
 
-  if(length(unique(cellList$spots))>1){
+  if(length(unique(cellList1$spots))>1){
     if(CSV==FALSE){
       message("Taking the spot coordinates and information per cell...")
-      spotframe <- extr_OuftiSpots(cellList)
+      spotframe <- extr_OuftiSpots(cellList1)
       outlist$spotframe <- spotframe
     }
     message("Adding cell dimensions (length/width) to spot information...")
@@ -185,24 +185,24 @@ extr_Oufti <- function(matfile, mag="No_PixelCorrection", phylo=FALSE){
 
   ##optional (default = OFF) add genealogy information as phylo objects.
   if(phylo == TRUE){
-    if(length(cellList$descendants)>1){
+    if(length(cellList1$descendants)>1){
       message("Getting phylogenies from ancestor/descendants information...")
-      cellList$parent <- as.numeric(lapply(cellList$ancestors, function(x) utils::tail(as.numeric(x), n=1)))
-      cellList$parent[is.na(cellList$parent)] <- 0
-      cellList$child1 <- as.numeric(lapply(cellList$descendants, function(x) as.numeric(x)[1]))
-      cellList$child2 <- as.numeric(lapply(cellList$descendants, function(x) as.numeric(x)[2]))
-      cellList$death <- unlist(lapply(cellList$cell, function(x) max(cellList$frame[cellList$cell==x])))
-      cellList$birthframe <- as.numeric(as.character(cellList$birthframe))
-      cellList$edgelength <- cellList$death-cellList$birthframe
-      cellList$root <- 0
-      CL <- cellList[cellList$frame==cellList$death,]
+      cellList1$parent <- as.numeric(lapply(cellList1$ancestors, function(x) utils::tail(as.numeric(x), n=1)))
+      cellList1$parent[is.na(cellList1$parent)] <- 0
+      cellList1$child1 <- as.numeric(lapply(cellList1$descendants, function(x) as.numeric(x)[1]))
+      cellList1$child2 <- as.numeric(lapply(cellList1$descendants, function(x) as.numeric(x)[2]))
+      cellList1$death <- unlist(lapply(cellList1$cell, function(x) max(cellList1$frame[cellList1$cell==x])))
+      cellList1$birthframe <- as.numeric(as.character(cellList1$birthframe))
+      cellList1$edgelength <- cellList1$death-cellList1$birthframe
+      cellList1$root <- 0
+      CL <- cellList1[cellList1$frame==cellList1$death,]
       phylolist <- getphylolist_SupSeg(CL)
       if(ape::is.rooted.phylo(phylolist$generation_lists)!=T){
         u <-lapply(phylolist$generation_dataframes, function(x) is.data.frame(x))
         phylolist$generation_dataframes <- phylolist$generation_dataframes[c(1:length(u))[u==T]]
         phylolist$generation_lists <- phylolist$generation_lists[c(1:length(u))[u==T]]
       }
-      if(length(cellList$spots)>1){
+      if(length(cellList1$spots)>1){
         message("Saving the relative spot localizations per phylogeny...")
         if(is.data.frame(phylolist$generation_dataframes)==FALSE){
           phlist_allcells <- lapply(phylolist$generation_dataframes, function(x) x[,c("node", "cell", "frame", "parent", "child1", "child2", "death", "birthframe", "edgelength", "root", "nodelabel")])
@@ -224,11 +224,14 @@ extr_Oufti <- function(matfile, mag="No_PixelCorrection", phylo=FALSE){
       phylolist$meshdata <- Mlist
       outlist$timelapsedata <- phylolist
     }
-    if(length(cellList$descendants)<1){
+    if(length(cellList1$descendants)<1){
       warning("No genealogy information found. Please check your original data file.")
     }
   }
   message("Finished Oufti extraction.")
+  if(cellList==FALSE){
+    outlist$cellList <-NULL
+  }
   return(outlist)
 }
 

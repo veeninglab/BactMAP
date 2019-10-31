@@ -75,7 +75,7 @@ addcellnumcell <- function(cellflip, y){
 
 #final combination function
 
-bindallcellsandmeshes <- function(cellflip, cellmask, timelapse=TRUE){
+bindallcellsandmeshes <- function(cellflip, cellmask, timelapse=TRUE, cellListIn){
   cellflipout <- list()
   for(n in 1:length(cellflip)){
     for(u in 1:length(cellflip[[n]])){
@@ -114,11 +114,15 @@ bindallcellsandmeshes <- function(cellflip, cellmask, timelapse=TRUE){
     }
 
     if(n==1){
-      cellflipout$cellList <- cellflipframe
+      if(cellListIn==TRUE){
+        cellflipout$cellList <- cellflipframe
+      }
       cellflipout$mesh <- cellmaskframe
     }
     else{
-      cellflipout$cellList <- rbind(cellflipout$cellList, cellflipframe)
+      if(cellListIn==TRUE){
+        cellflipout$cellList <- rbind(cellflipout$cellList, cellflipframe)
+      }
       cellflipout$mesh <- rbind(cellflipout$mesh, cellmaskframe)
     }
   }
@@ -130,7 +134,7 @@ bindallcellsandmeshes <- function(cellflip, cellmask, timelapse=TRUE){
 ##extract function for exporting.
 
 #' @export
-extr_SuperSeggerCells <- function(loc, frames, mag, timelapse=FALSE, startframe=0){
+extr_SuperSeggerCells <- function(loc, frames, mag, timelapse=FALSE, startframe=0, cellList=FALSE){
   if(paste(loc, "/xy", startframe, sep="")%in%list.dirs(loc)==FALSE){
     stop(paste("Cannot find SuperSegger output folder(s) starting with 'xy' in the directory '", loc, "'. Please make sure to set the correct path in variable 'loc'", sep=""))
   }
@@ -149,7 +153,7 @@ extr_SuperSeggerCells <- function(loc, frames, mag, timelapse=FALSE, startframe=
 
   segcells <- readallsegcells(frames=frames, loc=loc, startframe = startframe)
   segmasks <- getallmasks(segcells)
-  finalframe <- bindallcellsandmeshes(flipallcells(segcells), segmasks, timelapse)
+  finalframe <- bindallcellsandmeshes(flipallcells(segcells), segmasks, timelapse, cellListIn=cellList)
   finalframe$mesh <- meshTurn(finalframe$mesh, "x", "y")
   finalframe$mesh$Y <- finalframe$mesh$Ymid + (finalframe$mesh$Ymid - finalframe$mesh$Y)
   finalframe$mesh$Y_rot <- -finalframe$mesh$Y_rot

@@ -11,7 +11,9 @@
 
 #1. combine.analyses: function(listofdataframes, listofconditions, listofcolors)
 #'@export
-combineDataframes <- function(listofdataframes, listofconditions, listofchannels ){
+combineDataframes <- function(listofdataframes, listofconditions, listofchannels, output = "finalframe"){
+
+  listofdataframes <- lapply(listofdataframes, function(x) checkVersionCompatible(x))
 
   #make sure there's no misalignment in the amount of conditions & channels.
   if(!missing(listofchannels)){
@@ -51,12 +53,22 @@ combineDataframes <- function(listofdataframes, listofconditions, listofchannels
     }
   }
 
+  if(output=="all"|output=="finalframe"){
+    listofdataframes_trimmed <- returnCommonColumn(listofdataframes)
+    finalframe <- do.call('rbind', listofdataframes_trimmed)
+  }
+  if(output=="all"){
+    return(list("finalframe" = finalframe, "originaldata" = listofdataframes))
+  }
+  if(output=="finalframe"){
+    return(list("finalframe"=finalframe))
+  }
+  if(output=="originaldata"){
+    return(list("originaldata"=listofdataframes))
+  }
 
-  listofdataframes_trimmed <- returnCommonColumn(listofdataframes)
-  finalframe <- do.call('rbind', listofdataframes_trimmed)
 
 
-  return(list("finalframe" = finalframe, "originaldata" = listofdataframes))
 
   }
 

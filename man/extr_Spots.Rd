@@ -25,7 +25,7 @@ Other columns will be saved in the output "cellList" (see below).
 }
 
 \usage{
-extr_Spots(dataloc, seperator = ",")
+extr_Spots(dataloc, seperator = ",", cellList=FALSE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -35,6 +35,9 @@ extr_Spots(dataloc, seperator = ",")
   \item{seperator}{
  Indicates the column seperator of the .txt or .csv. Default = ","
 }
+  \item{cellList}{
+  When TRUE, the value 'cellList' is returned (see below).
+  }
 }
 
 \value{

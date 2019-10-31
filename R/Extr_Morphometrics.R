@@ -66,11 +66,13 @@ extrMorphCell <- function(cell, l = TRUE){
 
 
 #' @export
-extr_Morphometrics <- function(morphpath, mag, turncells = TRUE){
+extr_Morphometrics <- function(morphpath, mag, turncells = TRUE, cellList=FALSE){
   C <- extr_Morphometrics_cellList(morphpath)
   M <- spotrExtractMorphMESH(C)
   listM <- list()
-  listM$cellList <- C
+  if(cellList==TRUE){
+    listM$cellList <- C
+  }
   if(turncells==TRUE){
     listM$mesh <- meshTurn(M)
   }

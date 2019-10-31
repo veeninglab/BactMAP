@@ -24,7 +24,7 @@ Optional:
 Any other parameters will be saved in the output dataframe cellList.
 }
 \usage{
-extr_Meshes(dataloc, sep = ",", turn = TRUE, mag)
+extr_Meshes(dataloc, sep = ",", turn = TRUE, mag, cellList=FALSE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -40,6 +40,9 @@ When \code{turn==TRUE}, the cells will be turned so that the mid-point is on coo
   \item{mag}{
 The magnification convertion factor (see addPixels2um). When given, the output will be also given in microns.
 }
+  \item{cellList}{
+When TRUE, cellList will be part of the output of this function (see Value below).
+  }
 }
 
 \value{
@@ -52,7 +55,7 @@ Renske van Raaphorst
 }
 
 \seealso{
-\code{\link{pixel2um}}
+\code{\link{pixel2um}}, \code{\link{mesh}}
 }
 \examples{
 \dontrun{

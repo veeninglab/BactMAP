@@ -3,6 +3,7 @@
 export(addPalette)
 export(addPixels2um)
 export(bactKymo)
+export(checkVersionCompatible)
 export(colorsCUD)
 export(combineDataframes)
 export(createPlotList)

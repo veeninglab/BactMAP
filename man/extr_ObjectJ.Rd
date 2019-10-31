@@ -35,6 +35,9 @@ extr_ObjectJ( dataloc,
   \item{turn_meshes}{
   Default TRUE. When TRUE, the bounding boxes are all turned so the mid-point is at [0,0] while the length axis of the cell is parallel to the X-axis.
   }
+  \item{cellList}{
+  Default FALSE. When TRUE, the "cellList" (see Values below) is part of the output.
+  }
 }
 \details{
  ObjectJ can already convert it's data to micron for you! Therefore, the default setting for "mag" is "no_PixelCorrection". Check what your settings are before converting the data using BactMAP.

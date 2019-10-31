@@ -12,9 +12,9 @@ Part of the *extr_*-functions, extr_SuperSeggerCells takes the mask created by S
 extr_SuperSeggerClist() takes the clist (SuperSegger summarized output) and forms genealogy files which can be processed to network plots and trees.
 }
 \usage{
-extr_SuperSeggerCells(loc, frames, mag, timelapse=FALSE, startframe=0)
+extr_SuperSeggerCells(loc, frames, mag, timelapse=FALSE, startframe=0, cellList=FALSE)
 
-extr_SuperSeggerClist(matfile, trim.orphans=TRUE)
+extr_SuperSeggerClist(matfile, trim.orphans=TRUE, cellList=FALSE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -36,6 +36,9 @@ magnification conversion factor name (which is part of Pixels2um)
  \item{startframe}{
  default = 0. set to 1 if the first of your xy-locations is 1.
  }
+ \item{cellList}{
+ Default=FALSE. When TRUE, the cellList (see below) will be part of the output of the function.
+ }
 
 For extr_SuperSeggerClist:
 
@@ -44,6 +47,9 @@ For extr_SuperSeggerClist:
  }
  \item{trim.orphans}{
  Default=TRUE. When TRUE, cells without offspring or parents will be removed from the dataset.
+ }
+ \item{cellList}{
+ Default=FALSE. When TRUE, the cellList (see below) will be part of the output of the function.
  }
 
 }

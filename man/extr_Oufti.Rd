@@ -10,13 +10,14 @@
 Import oufti meshes, objects and spot localizations directly from .Mat, .txt or .CSV files to R. Note that oufti objects can only be imported from .csv or .txt files.
 }
 \usage{
-extr_Oufti(matfile, mag="No_PixelCorrection", phylo=FALSE)
+extr_Oufti(matfile, mag="No_PixelCorrection", phylo=FALSE, cellList=FALSE)
 }
 
 \arguments{
   \item{matfile}{.MAT, .CSV or .TXT of oufti segmentation. Spot data, object data and fluorescence intensity will automatically be detected. Note: object data can only be extracted from .CSV or .TXT files for now!}
   \item{mag}{The pixel-micron conversion factor. See bactMAP::getPixels2um() for more information. When not given, the factor will be 1.}
   \item{phylo}{When TRUE, a list of child-parent nodes & phylo objects containing cell genealogy will be made. Takes very long, so default is set to FALSE}
+  \item{cellList}{When TRUE, the cellList (see Value below) will be part of the output list.}
 %%     ~~Describe \code{x} here~~
 }
 

@@ -19,20 +19,22 @@ custom visualization.
 
 ## Manual & Tutorials
 
-In the [wiki](https://github.com/vrrenske/BactMAP/wiki) you will find a
+In the [wiki](https://github.com/veeninglab/BactMAP/wiki) you will find a
 manual and some examples on how to use BactMAP as a gateway between your
 segmentation & fluorescence data.
+
+If you have any comments, requests or find bugs, please report it on the [Issues page](https://github.com/veeninglab/bactmap/issues).**
 
 ## Download and install package
 
     #install devtools if not done yet
-    install.packages("devtools")
+    install.packages("remotes")
     
-    #install bactmap from my github repository
-    devtools::install_github("veeninglab/bactMAP")
+    #install bactmap from the veeninglab github repository
+    remotes::install_github("veeninglab/bactMAP")
     
     #or install it with all dependencies
-    devtools::install_github("veeninglab/bactMAP", dependencies=TRUE)
+    remotes::install_github("veeninglab/bactMAP", dependencies=TRUE)
     
     #load package
     library(bactMAP)

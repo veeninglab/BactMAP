@@ -9,7 +9,7 @@ Upload cell outlines segmented using Morphometrics
 The 'CONTOURS'-output from Morphometrics is uploaded and converted to a *mesh*-dataframe compatible with bactMAPs plotting functions. Find more examples of usage of \code{extr_Morphometrics} on the BactMAP \href{https://github.com/vrrenske/bactMAP/wiki}{wiki}.
 }
 \usage{
-extr_Morphometrics(morphpath, mag, turncells = TRUE)
+extr_Morphometrics(morphpath, mag, turncells = TRUE, cellList=FALSE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -22,6 +22,9 @@ extr_Morphometrics(morphpath, mag, turncells = TRUE)
   \item{turncells}{
   if set to TRUE (default), X and Y coordinates will be turned so that mid-cell is at [0,0], while the length axis of the cell's bounding box is parallel to the x axis.
 }
+  \item{cellList}{
+  when cellList==TRUE, the value \code{cellList} (see below) is part of the output.
+  }
 }
 
 \value{
@@ -44,7 +47,7 @@ Renske van Raaphorst
 #Upload Morphometrics output from bactMAP example files
 
 Example_MM <-  file.choose()
-Example_output <- extr_Morphometrics(Example_MM)
+Example_output <- extr_Morphometrics(Example_MM)$mesh
 
 #check output:
 summary(Example_output)

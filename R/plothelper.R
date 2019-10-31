@@ -168,7 +168,7 @@ superfun <- function(dat, bins,mag){
 
 #or two, by quartiles of the number of cells:
 #' @export
-createPlotList <- function(spotdata,  meshdata, groups =4 , colorpalette="GreenYellow", mag="No_PixelCorrection", AllPlot=F, Xm="X", Ym="Y", viridis=FALSE, showPlot=TRUE){
+createPlotList <- function(spotdata,  meshdata, groups =4 , colorpalette="GreenYellow", mag="No_PixelCorrection", AllPlot=F, Xm="X", Ym="Y", viridis=FALSE, showPlot=TRUE, getData=FALSE, getSummary=TRUE){
   if (!requireNamespace("MASS", quietly = TRUE)) {
     inp_P <- readline("Package 'MASS' needed for this function to work. Press 'y' to install, or any other key to cancel.")
     if(inp_P=="y"|inp_P=="Y"){utils::install.packages("MASS")}else{stop("Canceled")}
@@ -459,17 +459,21 @@ createPlotList <- function(spotdata,  meshdata, groups =4 , colorpalette="GreenY
   }
 
   u$histograms <- gridExtra::arrangeGrob(grobs=hislist, ncol=1)
-  u$spotdata <- MR
-  if(!missing(meshdata)){
-    u$meshdata <- meshdata
+  if(getData==TRUE){
+    u$spotdata <- MR
+    if(!missing(meshdata)){
+      u$meshdata <- meshdata
+    }
   }
   u$pixel2um <- p2um
-  u$data_summary <- makePlotListSummary_2(MR, groups=groups)
+  if(getSummary==TRUE){
+    u$data_summary <- makePlotListSummary_2(MR, groups=groups)
+  }
   message("Done plotting.")
   if(showPlot==TRUE){
     n <- 1
     while(n%in%c(1:9)){
-      n <- readline("Press the corresponding number to view:\n \n 1. lengthplot \n 2. widthplot \n 3. mean_outlines \n 4. qplots \n 5. histograms \n 6. spotdata \n 7. meshdata \n 8. pixel2um \n 9. data_summary \n 10. exit")
+      n <- readline("Press the corresponding number to view:\n \n 1. lengthplot \n 2. widthplot \n 3. mean_outlines \n 4. qplots \n 5. histograms \n 6. spotdata (if getData = TRUE) \n 7. meshdata (if getData = TRUE) \n 8. pixel2um \n 9. data_summary (if getSummary=TRUE) \n 10. exit")
       if(n==1){
         message("lengthplot: spot localization on length axis plotted over cells ordered by cell length - density plot")
         graphics::plot(u$lengthplot)
@@ -491,20 +495,35 @@ createPlotList <- function(spotdata,  meshdata, groups =4 , colorpalette="GreenY
         graphics::plot(u$histograms)
       }
       if(n==6){
-        message("spot dataframe including grouping (column 'q1'). summary:")
-        print(summary(u$spotdata))
+        if(getData==TRUE){
+          message("spot dataframe including grouping (column 'q1'). summary:")
+          print(summary(u$spotdata))
+        }
+        if(getData==FALSE){
+          message("spot dataframe not included in data output.")
+        }
       }
       if(n==7){
-        message("mesh dataframe including grouping (column 'q1'). summary:")
-        print(summary(u$meshdata))
+        if(getData==TRUE){
+          message("mesh dataframe including grouping (column 'q1'). summary:")
+          print(summary(u$meshdata))
+        }
+        if(getData==FALSE){
+          message("spot dataframe not included in data output.")
+        }
       }
       if(n==8){
         message("pixel to micron conversion factor:")
         print(message(u$pixel2um))
       }
       if(n==9){
-        message("summary of data")
-        print(u$data_summary)
+        if(getSummary==TRUE){
+          message("summary of data")
+          print(u$data_summary)
+        }
+        if(getSummary==FALSE){
+          message("No data summary created (getSummary=FALSE).")
+        }
       }
     }
 

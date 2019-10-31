@@ -1,6 +1,6 @@
 Package: bactMAP
 Title: Visualization and Analysis of Bacterial Cell Segmentation and Fluorescence Data
-Version: 0.1.0.0
+Version: 0.1.0.1
 Authors@R: person("Renske", "van Raaphorst", email = "renske.vanraaphorst@unil.ch", role = c("aut", "cre"))
 Description: Automated import of bacterial cell segmentation and fluorescence data from a range of softwares to uniformally analyze and visualize.
 Depends: R (>= 3.4)
@@ -42,6 +42,6 @@ Suggests:
   ggimage,
   mvtnorm,
   tidyverse
-Collate: 'ouftidirectlyfrommatlab.R' 'Extr_Morphometrics.R' 'ExtractCSVs.R' 'helperfunctions.R' 'ouftimeshtransform_fullfunction.R' 'plothelper.R' 'supersegger_genealogy.R' 'Plot_Image.R' 'objectplotting.R' 'supersegger_meshes.R' 'combine_analyses.R' 'timelapse.R' 'plotTracks.R' 'objectInBox.R'
+Collate: 'ouftidirectlyfrommatlab.R' 'Extr_Morphometrics.R' 'ExtractCSVs.R' 'helperfunctions.R' 'ouftimeshtransform_fullfunction.R' 'plothelper.R' 'supersegger_genealogy.R' 'Plot_Image.R' 'objectplotting.R' 'supersegger_meshes.R' 'combine_analyses.R' 'timelapse.R' 'plotTracks.R' 'objectInBox.R' 'zzz.R'
 RoxygenNote: 6.1.1
 VignetteBuilder: knitr

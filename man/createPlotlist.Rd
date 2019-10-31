@@ -17,7 +17,9 @@ createPlotList(spotdata,
                Xm="X",
                Ym="Y",
                viridis=FALSE,
-               showPlot=TRUE)
+               showPlot=TRUE,
+               getData=FALSE,
+               getSummary=TRUE)
 }
 \arguments{
   \item{spotdata}{Data frame containing -at least- column with spot x-localizations, y-localizations and frame number. When the variable meshdata is not given, additional required columns are cell ID, relative x-localization ("l" or "Lmid") and relative y-localization ("d" or "Dum").}
@@ -30,6 +32,8 @@ createPlotList(spotdata,
   \item{Ym}{See Xm}
   \item{viridis}{when \code{viridis==TRUE}, the \code{colorpalette} needs to be one of the \code{viridis} color palettes ("A", "B", "C", "D", "E", "magma", "cividis", "viridis", "plasma" or "inferno")}
   \item{showPlot}{when \code{showPlot==TRUE}, a menu will be shown after the function is finished, which enables the user to view the plot output of the function.}
+  \item{getData}{when \code{getData==TRUE}, the output list will include the input dataframes \code{spotdata} and (if given) \code{meshdata}, which include the quantile classification and the relative localization of the spots.}
+  \item{getSummary}{when \code{getSummary==TRUE}, the output list will include the \code{data_summary} (see below).}
 }
 
 \value{
@@ -54,7 +58,7 @@ These plotting functions were developed for:
 Renske van Raaphorst
 }
 \note{
-This function is meant to give an overview of the data. Check the tutorials on the \href{https://github.com/vrrenske/BactMAP/wiki}{wiki page} for examples of modifying individual plots.
+This function is meant to give an overview of the data. Check the tutorials on the \href{https://github.com/veeninglab/BactMAP/wiki/tutorials}{wiki page} for examples of modifying individual plots.
 }
 
 

@@ -65,7 +65,7 @@ extr_MicrobeJSpots <- function(spotloc ,mag, sep=","){
 }
 
 #' @export
-extr_MicrobeJ <- function(dataloc, spotloc, objectloc, mag, sepspot=",", sepmesh=",", sepobj=","){
+extr_MicrobeJ <- function(dataloc, spotloc, objectloc, mag, sepspot=",", sepmesh=",", sepobj=",", cellList=FALSE){
   if(missing(spotloc)!=T&missing(dataloc)!=T&missing(mag)){
     stop("Magnification conversion needed for proper intercellular measurements! MicrobeJ already converted the spot localizations for you, but not the contours.")
   }
@@ -75,11 +75,11 @@ extr_MicrobeJ <- function(dataloc, spotloc, objectloc, mag, sepspot=",", sepmesh
   outlist <- list()
   if(missing(dataloc)!=T){
     MESHout <- extr_MicrobeJMESH(dataloc, sepmesh)
-    cellList <- MESHout$cellList
+    cellList1 <- MESHout$cellList
     MESH <- MESHout$meshList
     if(missing(spotloc)==T){
-      cellList$num <- cellList$INDEX
-      outlist$cellList <- cellList
+      cellList1$num <- cellList1$INDEX
+      outlist$cellList <- cellList1
       outlist$mesh <- MESH
     }
   }
@@ -121,7 +121,7 @@ extr_MicrobeJ <- function(dataloc, spotloc, objectloc, mag, sepspot=",", sepmesh
 
     outlist$mesh <- listbox$mesh
     cellList3 <- list()
-    cellList3$Mesh <- cellList
+    cellList3$Mesh <- cellList1
     cellList3$Spots <- cellList2
     outlist$cellList <- cellList3
   }
@@ -139,12 +139,15 @@ extr_MicrobeJ <- function(dataloc, spotloc, objectloc, mag, sepspot=",", sepmesh
     outlist$object_relative <- object_relative
   }
   outlist$pixel2um <- unlist(get(magnificationList, envir=magEnv)[mag])
+  if(cellList==FALSE){
+    outlist$cellList <- NULL
+  }
   return(outlist)
 }
 
 ##ISBatch
 #' @export
-extr_ISBatch <- function(dataloc, seperator=","){
+extr_ISBatch <- function(dataloc, seperator=",", cellList=FALSE){
   if(substr(dataloc, nchar(dataloc)-3, nchar(dataloc))==".txt"){
     SPOTS <- utils::read.table(dataloc, header=T, sep="\t")
   }
@@ -160,14 +163,16 @@ extr_ISBatch <- function(dataloc, seperator=","){
   }
 
   listout <- list()
-  listout$cellList <- SPOTS
+  if(cellList==TRUE){
+    listout$cellList <- SPOTS
+  }
   listout$spotframe <- spotminimal
   return(listout)
 }
 
 
 #' @export
-extr_Spots <- function(dataloc, seperator=","){
+extr_Spots <- function(dataloc, seperator=",", cellList=FALSE){
   if(substr(dataloc, nchar(dataloc)-3, nchar(dataloc))==".txt"){
     SPOTS <- utils::read.table(dataloc, header=T, sep=seperator)
   }
@@ -186,7 +191,9 @@ extr_Spots <- function(dataloc, seperator=","){
   }
   spotminimal <- SPOTS[,colSPOTS]
   listout <- list()
-  listout$cellList <- SPOTS
+  if(cellList==TRUE){
+    listout$cellList <- SPOTS
+  }
   listout$spotframe <- spotminimal
   return(listout)
 }
@@ -198,7 +205,8 @@ extr_ObjectJ <- function(dataloc,
                          mag="No_PixelCorrection",
                          boundingBoxX= c("X1","X2","X3","X4","X5","X6","X7","X8", "X9","X10","X11"),
                          boundingBoxY =c("Y1","Y2","Y3","Y4","Y5","Y6","Y7","Y8", "Y9","Y10","Y11"),
-                         turn_meshes = TRUE){
+                         turn_meshes = TRUE,
+                         cellList=FALSE){
   #prepare list for output
   outlist <- list()
   #read out .txt file
@@ -229,9 +237,10 @@ extr_ObjectJ <- function(dataloc,
     oj_chain <- oj_chain[,c("chainID", "ChainAxis", "ChainDia", "frame")]
   }
 
-  #save full file as cellList
-  outlist$cellList <- oj
-
+  if(cellList==TRUE){
+    #save full file as cellList
+    outlist$cellList <- oj
+  }
   #save chainfile as chainframe
   outlist$chainframe <- oj_chain
 
@@ -311,7 +320,7 @@ spotrExtractSpotsObjectJ <- function(SF){
 
 
 #' @export
-extr_Meshes <- function(dataloc, sep=",", turn=TRUE, mag){
+extr_Meshes <- function(dataloc, sep=",", turn=TRUE, mag, cellList=FALSE){
   if (!requireNamespace("shotGroups", quietly = TRUE)) {
     inp <- readline("Package 'shotGroups' needed for this function to work. Press 'y' to install, or any other key to cancel.")
     if(inp=="y"|inp=="Y"){utils::install.packages("shotGroups")}else{stop("Canceled")}
@@ -323,7 +332,9 @@ extr_Meshes <- function(dataloc, sep=",", turn=TRUE, mag){
     MESH <- utils::read.csv(dataloc, header=T, sep=sep)
   }
   meshL <- list()
-  meshL$cellList <- MESH
+  if(cellList==TRUE){
+    meshL$cellList <- MESH
+  }
   MESH$cellID <- paste(MESH$cell, MESH$frame, sep="_")
   if("max.length"%in%colnames(MESH)==F){
     bblist <- lapply(unique(MESH$cellID), function(x) as.numeric(suppressWarnings(shotGroups::getMinBBox(data.frame(x= MESH[MESH$cellID==x,]$X, y=MESH[MESH$cellID==x,]$Y))[c("width","height")])))

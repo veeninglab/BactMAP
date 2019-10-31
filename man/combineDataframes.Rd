@@ -8,7 +8,7 @@ Function to combine data by condition (e.g. mutant vs wild type) and/or channel 
 The function adds a column "condition" and/or "channel" to each dataframe in the given *listofdataframes*, after which it concatenates all dataframes. If not all columns in the dataframes match, it discards the columns which don't match. The function returns the concatenated dataframe "finalframe" and the original list of dataframes with the "condition" and/or "channel" column added to each dataframe.
 }
 \usage{
-combineDataframes(listofdataframes, listofconditions, listofchannels)
+combineDataframes(listofdataframes, listofconditions, listofchannels, output="finalframe")
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -21,6 +21,9 @@ list of conditions corresponding to each dataframe. Needs to have the same order
   \item{listofchannels}{
 list of channels corresponding to each dataframe. Needs to have the same order and length as listofdataframes.
 }
+  \item{output}{
+when output = "all", both 'finalframe' and 'originaldata' will be in the output list. when output = "finalframe" or "originaldata", only the given data will be in the output list.
+  }
 }
 
 \value{

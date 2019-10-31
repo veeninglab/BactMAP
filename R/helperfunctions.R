@@ -9,6 +9,27 @@
 #library(ggthemes)
 #library(gridExtra)
 
+#' @export
+#'
+#'
+checkVersionCompatible <- function(oldDataFrame, returnDataFrame=TRUE){
+  if("Xrotum"%in%colnames(oldDataFrame)){
+    colnames(oldDataFrame)[colnames(oldDataFrame)=="Xrotum"] <- "Xrot_micron"
+    colnames(oldDataFrame)[colnames(oldDataFrame)=="Yrotum"] <- "Yrot_micron"
+    message("Found old variable names 'Xrotum' and 'Yrotum'.")
+    if(returnDataFrame==TRUE){
+      message("Changed old variables for new variables 'Xrot_micron' and 'Yrot_micron'")
+      return(oldDataFrame)
+    }
+  }
+  if("Xrotum"%in%colnames(oldDataFrame)==F){
+    message("No compatibility problems found.")
+    if(returnDataFrame==TRUE){
+      return(oldDataFrame)
+    }
+  }
+}
+
 
 ##Set the pixel to um conversion
 #' @export
@@ -52,7 +73,7 @@ getPixels2um <- function(){
 
 ##merge spotfiles with only raw coordinates with mesh file with only raw data. add mesh length/width while on it.
 #' @export
-spotsInBox <- function(spotdata, meshdata, Xs = "x", Ys = "y", Xm = "X", Ym = "Y"){
+spotsInBox <- function(spotdata, meshdata, Xs = "x", Ys = "y", Xm = "X", Ym = "Y", meshInOutput=FALSE){
   if (!requireNamespace("shotGroups", quietly = TRUE)) {
     inp <- readline("Package 'shotGroups' needed for this function to work. Press 'y' to install, or any other key to cancel.")
     if(inp=="y"|inp=="Y"){utils::install.packages("shotGroups")}else{stop("Canceled")}
@@ -91,13 +112,15 @@ spotsInBox <- function(spotdata, meshdata, Xs = "x", Ys = "y", Xm = "X", Ym = "Y
     o <- lapply(unique(meshdata$frame), function(x) lapply(unique(meshdata[meshdata$frame==x,]$cell), function(y) getSpotsInBox(meshp=meshdata[meshdata$frame==x&meshdata$cell==y,],
                                                                                                                                spotdatap=spotdata[spotdata$frame==x,],
                                                                                                                                u,
-                                                                                                                               a)))
+                                                                                                                               a,
+                                                                                                                               returnMESH=meshInOutput)))
   }
   if (requireNamespace("pbapply", quietly = TRUE)) {
     o <- pbapply::pblapply(unique(meshdata$frame), function(x) lapply(unique(meshdata[meshdata$frame==x,]$cell), function(y) getSpotsInBox(meshp=meshdata[meshdata$frame==x&meshdata$cell==y,],
                                                                                                                      spotdatap=spotdata[spotdata$frame==x,],
                                                                                                                      u,
-                                                                                                                   a)))
+                                                                                                                   a,
+                                                                                                                   returnMESH=meshInOutput)))
   }
 
   utils::setTxtProgressBar(pb, 45)
@@ -111,15 +134,19 @@ spotsInBox <- function(spotdata, meshdata, Xs = "x", Ys = "y", Xm = "X", Ym = "Y
   outs <- list()
   outs$spots_relative <- do.call('rbind', lapply(o, function(x) do.call('rbind', lapply(x, function(y) y$REP))))
   utils::setTxtProgressBar(pb,65)
-  outs$mesh <-  do.call('rbind', lapply(o, function(x) do.call('rbind', lapply(x, function(y) y$MESH))))
-  utils::setTxtProgressBar(pb, 85)
-  names(outs) <- c("spots_relative", "mesh")
+  names(outs) <- c("spots_relative")
+
+  if(meshInOutput==TRUE){
+    outs$mesh <-  do.call('rbind', lapply(o, function(x) do.call('rbind', lapply(x, function(y) y$MESH))))
+    utils::setTxtProgressBar(pb, 85)
+    names(outs) <- c("spots_relative", "mesh")
+  }
   utils::setTxtProgressBar(pb, 100)
   return(outs) #return datasets as list of dataframes
 
 }
 
-getSpotsInBox <- function(meshp, spotdatap, u, a){
+getSpotsInBox <- function(meshp, spotdatap, u, a, returnMESH){
 
   box <- suppressWarnings(shotGroups::getMinBBox(data.frame(x= meshp$X, y=meshp$Y))) #bounding box of cell
   lengthwidth <- c(box$width, box$height)
@@ -190,7 +217,12 @@ getSpotsInBox <- function(meshp, spotdatap, u, a){
   if("trajectory"%in%colnames(spotdatap)==T){
     pinps <- merge(spotdatap[,c("x", "y", "trajectory", "displacement_sq", "trajectory_length")], pinps)
   }
-  return(list("REP" = pinps, "MESH" = meshp))
+  if(returnMESH==TRUE){
+    return(list("REP" = pinps, "MESH" = meshp))
+  }
+  if(returnMESH==FALSE){
+    return(list("REP"=pinps))
+  }
 }
 
 
@@ -430,7 +462,12 @@ centrefun <- function(dat, xie="ob_x", yie="ob_y"){
   dat <- dat[!is.na(dat$ob_x),]
   dat$centre_x <- NA
   dat$centre_y <- NA
+  if (requireNamespace("pbapply", quietly = TRUE)) {
   dat <- do.call('rbind', pbapply::pblapply(unique(dat$obID), function(x) takeObjectCentre(dat[dat$obID==x,], xie, yie)))
+  }
+  if (!requireNamespace("pbapply", quietly = TRUE)) {
+    dat <- do.call('rbind', lapply(unique(dat$obID), function(x) takeObjectCentre(dat[dat$obID==x,], xie, yie)))
+  }
   return(dat)
 }
 

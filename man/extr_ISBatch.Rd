@@ -10,7 +10,7 @@ Import ISBatch/Peakfitter data into R
 Import ISBatch/Peakfitter spot coordinates and/or trajectories from a .txt or .csv into R.
 }
 \usage{
-extr_ISBatch(dataloc, seperator=",")
+extr_ISBatch(dataloc, seperator=",", cellList=FALSE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -19,6 +19,9 @@ extr_ISBatch(dataloc, seperator=",")
 }
   \item{seperator}{
   When .CSV is not comma-separated but by something else, indicate this here.
+  }
+    \item{cellList}{
+  when TRUE, the value cellList is part of the returned output (see below).
   }
 }
 
@@ -29,6 +32,7 @@ extr_ISBatch(dataloc, seperator=",")
   \item{spotframe}{
   when data is made using ISBatch's peak fitter only, this data frame contains only x, y -coordinates and frame numbers. When trajectories are recorded, it also contains the squared-displacement, trajectory ID and trajectory length.
   }
+
 }
 \references{
 \url{http://singlemolecule.github.io/iSBatch/}

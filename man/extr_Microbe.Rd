@@ -9,7 +9,7 @@
 Upload the output of MicrobeJ into R. Upto now the code supports fluorescent localization data & cell outlines, both saved as seperate .CSV or .TXT files in the MicrobeJ GUI by first pressing \emph{<right click> -> expand all} on one of the Results columns and then pressing \emph{<right click> -> export} for both the cell contour dataset and the fluorescent localization dataset.
 }
 \usage{
-extr_MicrobeJ(dataloc, spotloc, objectloc, mag, sepspot=",", sepmesh=",", sepobj=",")
+extr_MicrobeJ(dataloc, spotloc, objectloc, mag, sepspot=",", sepmesh=",", sepobj=",", cellList=FALSE)
 }
 
 
@@ -21,6 +21,7 @@ extr_MicrobeJ(dataloc, spotloc, objectloc, mag, sepspot=",", sepmesh=",", sepobj
   \item{sepspot}{default is ",". when the to-be-imported .csv/txt is seperated by another value, change here.}
   \item{sepmesh}{default is ",". when the to-be-imported .csv/txt is seperated by another value, change here.}
   \item{sepobj}{default is ",". when the to-be-imported .csv/txt is seperated by another value, change here.}
+  \item{cellList}{when cellList==TRUE, the dataframe 'cellList' (see Values below) will be in the output list.}
 
 }
 
@@ -41,7 +42,7 @@ List of items containing:
 
 
 \references{
-\url{www.microbej.org}
+\url{https://microbej.com}
 
 Ducret, A., Quardokus, E.M. and Brun, Y.V., 2016. MicrobeJ, a tool for high throughput bacterial cell detection and quantitative analysis. \emph{Nature microbiology}, 1, p.16077.
 

@@ -7,7 +7,7 @@
 
 
 #' @export
-extr_SuperSeggerClist <- function(matfile, trim.orphans=TRUE){
+extr_SuperSeggerClist <- function(matfile, trim.orphans=TRUE, cellList=FALSE){
   if (!requireNamespace("R.matlab", quietly = TRUE)) {
     inp <- readline("Packages 'R.matlab' needed for this function to work. Press 'y' to install, or any other key to cancel.")
     if(inp=="y"|inp=="Y"){utils::install.packages("R.matlab")}else{stop("Canceled")}
@@ -46,6 +46,9 @@ extr_SuperSeggerClist <- function(matfile, trim.orphans=TRUE){
   out$data_generation_dataframes <- phylos$generation_dataframes
   if(trim.orphans==TRUE){
     out$cellList_trimmed <- phylos$genframe
+  }
+  if(cellList==FALSE){
+    out$cellList<-NULL
   }
   message(summary(out))
   return(out)

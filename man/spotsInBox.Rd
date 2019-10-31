@@ -9,7 +9,7 @@
 Takes a dataframe containing Mesh x/y coordinates and a dataframe containing Spots/Object x/y coordinates and returns the relative localization of the Spots/Objects inside the meshes, and the relative coordinates of the meshes from the mid-point of each mesh, where the longest axis of the cell is horizontal in the x/y plane.
 }
 \usage{
-spotsInBox(spotdata, meshdata, Xs = "x", Ys = "y", Xm = "X", Ym = "Y")
+spotsInBox(spotdata, meshdata, Xs = "x", Ys = "y", Xm = "X", Ym = "Y", meshInOutput=FALSE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -19,6 +19,7 @@ spotsInBox(spotdata, meshdata, Xs = "x", Ys = "y", Xm = "X", Ym = "Y")
   \item{Ys}{column in dataframe \code{spotfile} containing the y-coordinates of the spots or object points. Default = "y".}
   \item{Xm}{column in dataframe \code{MESH} containing the x-coordinates of the mesh outline points. Default = "X".}
   \item{Ym}{column in dataframe \code{MESH} containing the y-coordinates of the mesh outline points. Default = "Y".}
+  \item{meshInOutput}{When TRUE, the 'mesh' (see below) will be part of the output of the spotsInBox function.}
 }
 
 
