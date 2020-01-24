@@ -9,8 +9,9 @@
 
 #function to get all cell files into R as a list per frame number
 upperdir <- function(frameN, loc){
-  cellnameList <- list.files(path=paste(loc, "\\xy", frameN, "\\cell", sep=""))
-  matlist <- lapply(cellnameList, function(x) R.matlab::readMat(paste(loc, "\\xy", frameN, "\\cell\\", x, sep="")))
+  cellnameList <- list.files(path=paste(loc, "/xy", frameN, "/cell", sep=""))
+  cellnameList = cellnameList[cellnameList != "outsideTheGate"]
+  matlist <- lapply(cellnameList, function(x) R.matlab::readMat(paste(loc, "/xy", frameN, "/cell/", x, sep="")))
   return(matlist)
 }
 
@@ -149,6 +150,10 @@ extr_SuperSeggerCells <- function(loc, frames, mag, timelapse=FALSE, startframe=
   if (!requireNamespace("raster", quietly = TRUE)) {
     inp <- readline("Package 'raster' needed for this function to work. Press 'y' to install, or any other key to cancel.")
     if(inp=="y"|inp=="Y"){utils::install.packages("raster")}else{stop("Canceled")}
+  }
+  if(!requireNamespace("rgeos", quietly=TRUE)){
+    message("Installing 'rgeos'..")
+    utils::install.packages("rgeos")
   }
 
   segcells <- readallsegcells(frames=frames, loc=loc, startframe = startframe)

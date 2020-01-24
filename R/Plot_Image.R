@@ -70,6 +70,9 @@ plotCellsTime <- function(celdat,
   }
 
   if(outlines==TRUE&!missing(meshdata)){
+    if("numpoint"%in%colnames(meshdata)){
+      meshdata$num <- meshdata$numpoint
+    }
     meshdata <- meshdata[,c("frame", "cell", "X_rot", "Y_rot", "num")]
   }
   if(outlines==TRUE&missing(meshdata)){
