@@ -18,8 +18,7 @@ quick overview of your data to make a decision on further analysis and
 custom visualization.
 
 <<<<<<< HEAD
-**This is the development page of BactMAP. Please go to https://github.com/veeninglab/bactmap for 
-the stable build. There you can also find the wiki with instructions, documentation and tutorials.
+
 If you have any comments, requests or find bugs, please report it on the [Issues page](https://github.com/veeninglab/bactmap/issues).**
 =======
 ## Manual & Tutorials
@@ -27,7 +26,6 @@ If you have any comments, requests or find bugs, please report it on the [Issues
 In the [wiki](https://github.com/vrrenske/BactMAP/wiki) you will find a
 manual and some examples on how to use BactMAP as a gateway between your
 segmentation & fluorescence data.
->>>>>>> fb1ed24... Update README.md
 
 ## Download and install package
 
@@ -49,3 +47,8 @@ segmentation & fluorescence data.
 ## Development version
 
 Find the development version [here](https://github.com/vrrenske/bactMAP).
+
+## Version 0.1.0.2
+
+This new version contains bug fixes of `extr_MicrobeJ` and `extr_Oufti`. It also has a few new functions: `orientCells` and `onePerCell`. The first function helps you flip cells based on non-symmetrical fluorescence localization (for instance, a polar fluorescent spot) - the latter is useful if you want to make histograms of cell lengths, etc. based on `mesh` or `object` files. A short description of the functions can be found in the manual inside the package (type `?orientCells` to find the help of this function, for instance). I will add a small tutorial and documentation to the wiki shortly.
+
