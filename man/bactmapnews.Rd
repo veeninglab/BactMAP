@@ -1,7 +1,6 @@
 \name{bactmapnews}
 \alias{bactmapnews}
 
-<<<<<<< HEAD
 \title{This is version 0.1.0.2 of BactMAP}
 
 \description{
