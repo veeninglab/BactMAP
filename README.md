@@ -17,7 +17,6 @@ trajectories in the cell and many other things. This can give you a
 quick overview of your data to make a decision on further analysis and
 custom visualization.
 
-<<<<<<< HEAD
 
 If you have any comments, requests or find bugs, please report it on the [Issues page](https://github.com/veeninglab/bactmap/issues).**
 =======
