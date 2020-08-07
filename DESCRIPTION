@@ -1,7 +1,7 @@
 Package: bactMAP
 Title: Visualization and Analysis of Bacterial Cell Segmentation and Fluorescence Data
 Version: 0.1.0.2
-Authors@R: person("Renske", "van Raaphorst", email = "renske.vanraaphorst@unil.ch", role = c("aut", "cre"))
+Authors@R: person("Renske", "van Raaphorst", email = "renske.vanraaphorst@uclouvain.be", role = c("aut", "cre"))
 Description: Automated import of bacterial cell segmentation and fluorescence data from a range of softwares to uniformally analyze and visualize.
 Depends: R (>= 3.4)
 License: MIT + file LICENSE
@@ -11,22 +11,14 @@ URL: https://veeninglab.com/bactmap
 biocViews:
 Imports:
   ggplot2 (>= 3.0.0),
-<<<<<<< HEAD
   rlang,
-=======
->>>>>>> 390270d... update BactMAP to version 0.1.0.1
   plyr,
   utils,
   methods,
   stats,
-<<<<<<< HEAD
   ggtree,
   dplyr,
   tidyr
-=======
-  rlang (>= 0.4.0),
-  ggtree
->>>>>>> 390270d... update BactMAP to version 0.1.0.1
 Suggests:
   gridExtra,
   MASS,
