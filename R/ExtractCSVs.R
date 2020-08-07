@@ -305,10 +305,17 @@ extr_MicrobeJ <- function(dataloc,
     if("X_rot"%in%colnames(outlist$mesh)!=T){
       outlist$mesh <- meshTurn(outlist$mesh)
     }
+<<<<<<< HEAD
     outlist$mesh$Xrot_micron <- outlist$mesh$X_rot * unlist(get(magnificationList, envir=magEnv)[magd])
     outlist$mesh$Yrot_micron <- outlist$mesh$Y_rot * unlist(get(magnificationList, envir=magEnv)[magd])
     outlist$mesh$max_um <- outlist$mesh$max.length * unlist(get(magnificationList, envir=magEnv)[magd])
     outlist$mesh$maxwum <- outlist$mesh$max.width * unlist(get(magnificationList, envir=magEnv)[magd])
+=======
+    outlist$mesh$Xrot_micron <- outlist$mesh$X_rot * unlist(get(magnificationList, envir=magEnv)[mag])
+    outlist$mesh$Yrot_micron <- outlist$mesh$Y_rot * unlist(get(magnificationList, envir=magEnv)[mag])
+    outlist$mesh$max_um <- outlist$mesh$max.length * unlist(get(magnificationList, envir=magEnv)[mag])
+    outlist$mesh$maxwum <- outlist$mesh$max.width * unlist(get(magnificationList, envir=magEnv)[mag])
+>>>>>>> 390270d... update BactMAP to version 0.1.0.1
   }
   if(missing(objectloc)!=T&missing(dataloc)!=T){
     object_relative <- objectInBox(meshdata = outlist$mesh, objectdata = outlist$objectframe, mag=mago)

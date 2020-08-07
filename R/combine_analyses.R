@@ -17,14 +17,14 @@ combineDataframes <- function(listofdataframes, listofconditions, listofchannels
 
   #make sure there's no misalignment in the amount of conditions & channels.
   if(!missing(listofchannels)){
-      if(length(listofdataframes)!=length(listofchannels)){
-        stop("The amount of input dataframes does not match the amount of channels.")
-      }
+    if(length(listofdataframes)!=length(listofchannels)){
+      stop("The amount of input dataframes does not match the amount of channels.")
     }
+  }
   if(!missing(listofconditions)){
-      if(length(listofdataframes)!=length(listofconditions)){
-        stop("The amount of input dataframes does not match the amount of conditions.")
-      }
+    if(length(listofdataframes)!=length(listofconditions)){
+      stop("The amount of input dataframes does not match the amount of conditions.")
+    }
   }
 
   #input should be able to be output of other functions (e.g. plot output). in that case:  take first-order data frames out of the output & proceed.
@@ -71,7 +71,7 @@ combineDataframes <- function(listofdataframes, listofconditions, listofchannels
 
 
 
-  }
+}
 
 addColumn <- function(datframe, value, name){
   datframe[,name] <- value
@@ -81,7 +81,7 @@ addColumn <- function(datframe, value, name){
 returnCommonColumn <- function(datframelist){
   colnameslist <- lapply(datframelist, function(x) colnames(x))
   for(n in 2:length(datframelist)){
-   colnameslist[[1]] <- colnameslist[[1]][colnameslist[[1]]%in%colnameslist[[n]]]
+    colnameslist[[1]] <- colnameslist[[1]][colnameslist[[1]]%in%colnameslist[[n]]]
   }
   datframelist <- lapply(datframelist, function(x) x[,colnameslist[[1]]])
   return(datframelist)
@@ -107,11 +107,11 @@ plotOverlay <- function(meshdata,
 
   #check type input
   if(type!="all"&type!="projection"&type!="histogram"&type!="length"&type!="width"){type <- readline("Please give type of plot: 'histogram', 'length', 'width', 'projection', or 'all' and press enter to confirm.")
-    if(type!="all"&type!="projection"&type!="histogram"&type!="length"&type!="width"){stop("Plot type not recognized")}
+  if(type!="all"&type!="projection"&type!="histogram"&type!="length"&type!="width"){stop("Plot type not recognized")}
   }
   #check by input
   if(by!="both"&by!="channel"&by!="condition"){by <- readline("Please give the correct factor for seperating the plots: 'channel', 'condition', or 'both' and press enter to confirm.")
-    if(by!="both"&by!="channel"&by!="condition"){stop("Factor 'by' not recognized.")}
+  if(by!="both"&by!="channel"&by!="condition"){stop("Factor 'by' not recognized.")}
   }
 
   if(by=="both"|by=="channel"){
@@ -183,7 +183,7 @@ plotOverlay <- function(meshdata,
       if(missing(mag)){stop("Please add pixel-to-micron converter 'mag' to the function to calculate the spot ggplot2::coordinates in micron.")}
       spotdata$Lmid <- spotdata$l * unlist(get(magnificationList,envir=magEnv)[mag])
       spotdata$Dum <- spotdata$d * unlist(get(magnificationList,envir=magEnv)[mag])
-      }
+    }
   }
 
   #group data if needed
@@ -201,10 +201,10 @@ plotOverlay <- function(meshdata,
       onlycells <- unique(spotdata[,collist])
     }
   }
-    if(missing(meshdata)==T&missing(spotdata)==T){
-      if(missing(objectdata==T)){stop("No data input found.")}
-      onlycells <- unique(objectdata[,collist])
-    }
+  if(missing(meshdata)==T&missing(spotdata)==T){
+    if(missing(objectdata==T)){stop("No data input found.")}
+    onlycells <- unique(objectdata[,collist])
+  }
 
 
   onlycells <- onlycells %>%
@@ -223,7 +223,7 @@ plotOverlay <- function(meshdata,
 
   onlycells <- onlycells[,colnames(onlycells)[colnames(onlycells)!=quantiles_by]]
 
-   #build plot
+  #build plot
 
   if(type=="all"){
     plotout <- list()
@@ -373,7 +373,7 @@ plotOverlay <- function(meshdata,
       objectdata$frameOB <- paste(objectdata$frame, objectdata$obID, sep="_")
       if(by=="both"|by=="channel"){
         plot <- plot + ggplot2::geom_path(data=objectdata, ggplot2::aes_string(x='number', y='ob_out_y', color='channel', group='frameOB'), alpha=0.5) +
-                                            ggplot2::scale_color_manual(values=objectcolor)
+          ggplot2::scale_color_manual(values=objectcolor)
       }
       if(by=="condition"){
         plot <- plot + ggplot2::geom_path(data=objectdata, ggplot2::aes_string(x='number', y='ob_out_y'), color=objectcolor[1], alpha=0.5)
@@ -386,7 +386,7 @@ plotOverlay <- function(meshdata,
       if(by=="both"|by=="channel"){
         plot <- plot + ggplot2::geom_point(data=spotdata, ggplot2::aes_string(x='number', y='Dum', color='channel'), alpha=0.5)
         if(missing(objectdata)==T){
-        plot <- plot + ggplot2::scale_color_manual(values=spotcolor)
+          plot <- plot + ggplot2::scale_color_manual(values=spotcolor)
         }
       }
       if(by=="condition"){

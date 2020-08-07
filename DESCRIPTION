@@ -11,14 +11,22 @@ URL: https://veeninglab.com/bactmap
 biocViews:
 Imports:
   ggplot2 (>= 3.0.0),
+<<<<<<< HEAD
   rlang,
+=======
+>>>>>>> 390270d... update BactMAP to version 0.1.0.1
   plyr,
   utils,
   methods,
   stats,
+<<<<<<< HEAD
   ggtree,
   dplyr,
   tidyr
+=======
+  rlang (>= 0.4.0),
+  ggtree
+>>>>>>> 390270d... update BactMAP to version 0.1.0.1
 Suggests:
   gridExtra,
   MASS,
