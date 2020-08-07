@@ -46,7 +46,7 @@ segmentation & fluorescence data.
 
 Find the development version [here](https://github.com/vrrenske/bactMAP).
 
-## Version 0.1.0.2
+## Version 0.1.0.3
 
 This new version contains bug fixes of `extr_MicrobeJ` and `extr_Oufti`. It also has a few new functions: `orientCells` and `onePerCell`. The first function helps you flip cells based on non-symmetrical fluorescence localization (for instance, a polar fluorescent spot) - the latter is useful if you want to make histograms of cell lengths, etc. based on `mesh` or `object` files. A short description of the functions can be found in the manual inside the package (type `?orientCells` to find the help of this function, for instance). I will add a small tutorial and documentation to the wiki shortly.
 

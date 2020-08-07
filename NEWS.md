@@ -1,10 +1,10 @@
 ## News
 
-### Version 0.1.0.2
+### Version 0.1.0.3
 
 In this version, the following improvements are implemented:
 
-1. extr_SuperSeggerCells() import bug in Linux and MacOS fixed.
+1. extr_SuperSeggerCells() import bug in Linux and MacOS fixed (version 0.1.0.2)
 
 2. This version contains a few bug-fixes when it comes to importing data from MicrobeJ and Oufti. Check the wiki and/or documentation for more information on the import functions! 
 
